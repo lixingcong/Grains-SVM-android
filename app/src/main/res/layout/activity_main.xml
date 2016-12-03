@@ -47,11 +47,24 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_main_change_svm_param"
-        android:text="Change SVM params"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_main_change_svm_param"
+            android:text="Change SVM params"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview_main_text2"
+            android:text=""/>
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="match_parent"

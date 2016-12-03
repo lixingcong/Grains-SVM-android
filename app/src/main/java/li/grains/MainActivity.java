@@ -1,5 +1,6 @@
 package li.grains;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,9 +41,21 @@ public class MainActivity extends AppCompatActivity {
 		cv_demo();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode==1 && resultCode==RESULT_OK){
+			TextView text_params=(TextView)findViewById(R.id.textview_main_text2);
+			String C=data.getExtras().getString("C");
+			String gamma=data.getExtras().getString("gamma");
+			text_params.setText(C+", "+gamma);
+		}
+	}
+
 	private void set_my_view(){
 		Button btn_perform_download_features;
 		Button btn_update_features;
+		Button btn_change_svm_params;
+
 		final LinearLayout layout_update_features;
 
 		// layout hide or show
@@ -68,6 +81,25 @@ public class MainActivity extends AppCompatActivity {
 				String update_url=((EditText)findViewById(R.id.edittext_main_url)).getText().toString();
 				DownloadFile dl=new DownloadFile(MainActivity.this,getString(R.string.update_filename));
 				dl.execute(update_url);
+			}
+		});
+
+		// load last svm params
+		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
+		TextView text_params=(TextView)findViewById(R.id.textview_main_text2);
+		if(parseSharePref.contains("is_set_param")){
+			String C=parseSharePref.getString("C");
+			String gamma=parseSharePref.getString("gamma");
+			text_params.setText(C+", "+gamma);
+		}
+
+		// change svm params
+		btn_change_svm_params=(Button)findViewById(R.id.button_main_change_svm_param);
+		btn_change_svm_params.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(MainActivity.this, SVMParamsActivity.class);
+				startActivityForResult(myIntent,1);
 			}
 		});
 	}
