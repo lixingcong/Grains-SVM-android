@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Grains_SVM</string>
     <string name="updata_url">https://lixingcong.com/s/grain_features.csv</string>
+    <string name="update_filename">grain_features.csv</string>
 </resources>

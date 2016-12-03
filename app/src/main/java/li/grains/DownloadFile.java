@@ -36,7 +36,7 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 		// Create progress dialog
 		mProgressDialog = new ProgressDialog(context);
 		// Set your progress dialog Title
-		mProgressDialog.setTitle("Progress Bar Tutorial");
+		mProgressDialog.setTitle("filename: "+save_filename);
 		// Set your progress dialog Message
 		mProgressDialog.setMessage("Downloading, Please Wait!");
 		mProgressDialog.setIndeterminate(false);
@@ -95,7 +95,11 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 		// Update the progress dialog
 		mProgressDialog.setProgress(values[0]);
 		// Dismiss the progress dialog
-		mProgressDialog.dismiss();
-		Toast.makeText(context, "Update Done", Toast.LENGTH_SHORT).show();
+		// mProgressDialog.dismiss();
+		if(values[0]==100){
+			Toast.makeText(context, "Update Done", Toast.LENGTH_SHORT).show();
+			mProgressDialog.dismiss();
+		}
+
 	}
 }

@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				String update_url=((EditText)findViewById(R.id.edittext_main_url)).getText().toString();
-				DownloadFile dl=new DownloadFile(MainActivity.this,"1.txt");
+//				Toast.makeText(MainActivity.this,update_url,Toast.LENGTH_SHORT).show();
+				DownloadFile dl=new DownloadFile(MainActivity.this,getString(R.string.update_filename));
 				dl.execute(update_url);
 			}
 		});
