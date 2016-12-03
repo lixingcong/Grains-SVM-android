@@ -27,7 +27,6 @@ public class SVMParamsActivity extends AppCompatActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				String item=mlistView.getItemAtPosition(position).toString();
-				Toast.makeText(getApplicationContext(),"Param: "+item,Toast.LENGTH_SHORT).show();
 
 				// save to share-prefref
 				String[] item_splited=item.split(",");

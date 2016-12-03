@@ -18,13 +18,13 @@ import org.opencv.core.Scalar;
 
 public class MainActivity extends AppCompatActivity {
 
-	static {
-		if(!OpenCVLoader.initDebug()){
-			Log.d("MAIN", "OpenCV not loaded");
-		} else {
-			Log.d("MAIN", "OpenCV loaded");
-		}
-	}
+//	static {
+//		if(!OpenCVLoader.initDebug()){
+//			Log.d("MAIN", "OpenCV not loaded");
+//		} else {
+//			Log.d("MAIN", "OpenCV loaded");
+//		}
+//	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 		set_my_view();
 
 		// OpenCV demo
-		cv_demo();
+		//cv_demo();
 	}
 
 	@Override
