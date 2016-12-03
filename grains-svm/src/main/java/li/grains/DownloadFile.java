@@ -61,45 +61,47 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected String doInBackground(String... params) {
-		while(running)
-		try {
-			URL url = new URL(params[0]);
-			URLConnection connection = url.openConnection();
-			connection.connect();
+		if(running)
+			try {
+				URL url = new URL(params[0]);
+				URLConnection connection = url.openConnection();
+				connection.connect();
 
-			// Detect the file lenghth
-			int fileLength = connection.getContentLength();
+				// Detect the file lenghth
+				int fileLength = connection.getContentLength();
 
-			// Locate storage location
-			String filepath = Environment.getExternalStorageDirectory()
-					.getPath();
+				// Locate storage location
+				String filepath = Environment.getExternalStorageDirectory()
+						.getPath();
 
-			// Download the file
-			InputStream input = new BufferedInputStream(url.openStream());
+				// Download the file
+				InputStream input = new BufferedInputStream(url.openStream());
 
-			// Save the downloaded file
-			OutputStream output = new FileOutputStream(filepath + "/"
-					+ save_filename);
+				// Save the downloaded file
+				OutputStream output = new FileOutputStream(filepath + "/"
+						+ save_filename);
 
-			byte data[] = new byte[1024];
-			long total = 0;
-			int count;
-			while ((count = input.read(data)) != -1) {
-				total += count;
-				// Publish the progress
-				publishProgress((int) (total * 100 / fileLength));
-				output.write(data, 0, count);
+				byte data[] = new byte[1024];
+				long total = 0;
+				int count;
+				while ((count = input.read(data)) != -1) {
+					total += count;
+					// Publish the progress
+					publishProgress((int) (total * 100 / fileLength));
+					output.write(data, 0, count);
+				}
+
+				// Close connection
+				output.flush();
+				output.close();
+				input.close();
+			} catch (Exception e) {
+				// Error Log
+				Log.e("Error", e.getMessage());
+				e.printStackTrace();
 			}
-
-			// Close connection
-			output.flush();
-			output.close();
-			input.close();
-		} catch (Exception e) {
-			// Error Log
-			Log.e("Error", e.getMessage());
-			e.printStackTrace();
-		}
+		
+		running=false;
 		return null;
 	}
 
