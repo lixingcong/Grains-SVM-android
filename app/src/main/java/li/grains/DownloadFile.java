@@ -2,6 +2,7 @@ package li.grains;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -23,6 +24,7 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 	private ProgressDialog mProgressDialog;
 	private Context context;
 	private String save_filename;
+	private boolean running;
 
 	public DownloadFile(Context context,String save_filename){
 		super();
@@ -44,10 +46,22 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		// Show progress dialog
 		mProgressDialog.show();
+
+		// download could be cancelled
+		running=true;
+		mProgressDialog.setCancelable(true);
+		mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				cancel(true);
+				running=false;
+			}
+		});
 	}
 
 	@Override
 	protected String doInBackground(String... params) {
+		while(running)
 		try {
 			URL url = new URL(params[0]);
 			URLConnection connection = url.openConnection();
@@ -100,6 +114,12 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 			Toast.makeText(context, "Update Done", Toast.LENGTH_SHORT).show();
 			mProgressDialog.dismiss();
 		}
-
 	}
+
+	@Override
+	protected void onCancelled() {
+		running = false;
+		Toast.makeText(context, "Update was cancelled", Toast.LENGTH_SHORT).show();
+	}
+
 }
