@@ -7,10 +7,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
 	private TextView text1=null;
 
 	private Button btn_run_svm;
+	private Button btn_perform_download_features;
 	private Button btn_update_features;
-	private Button btn_download_features;
 	private Button btn_change_svm_params;
 	private LinearLayout layout_update_features;
 
@@ -56,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
 			Toast.makeText(getApplicationContext(),"Good permissions",Toast.LENGTH_SHORT).show();
 		}
 
+		// layout hide or show
 		layout_update_features=(LinearLayout)findViewById(R.id.layout_main_update);
-		btn_download_features=(Button)findViewById(R.id.button_main_update_features);
-		btn_download_features.setOnClickListener(new View.OnClickListener() {
+		btn_update_features =(Button)findViewById(R.id.button_main_update_features);
+		btn_update_features.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				int is_visible=layout_update_features.getVisibility();
@@ -69,6 +70,18 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+
+		// download click
+		btn_perform_download_features=(Button)findViewById(R.id.button_main_perform_update);
+		btn_perform_download_features.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String update_url=((EditText)findViewById(R.id.edittext_main_url)).getText().toString();
+				DownloadFile dl=new DownloadFile(MainActivity.this,"1.txt");
+				dl.execute(update_url);
+			}
+		});
+
 
 		Mat m = new Mat(5, 10, CvType.CV_8UC1, new Scalar(0));
 		Mat mr1 = m.row(1);
