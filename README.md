@@ -3,10 +3,12 @@
 > IDE: android studio 2.2.2
 > 
 > OS: ubuntu 16.04
+>
+> Android Mini API: 23 (Marshmallow)
 
 一个模式识别课程小设计，使用手机端识别从[这个仓库](https://github.com/lixingcong/Grains-SVM-python)训练得到已识别谷物。
 
-使用SVM分类器，提取谷物的几个特征进行简单分类的搭撒
+使用SVM分类器，提取谷物的几个特征进行简单分类。
 
 ### 依赖
 
@@ -16,9 +18,9 @@
 ### 使用方法
 
 - 下载[opencv4android](https://sourceforge.net/projects/opencvlibrary/files/opencv-android/)，并解压。这里用的是2.4.13.1版本
-- 解压得到OpenCV-android-sdk/sdk/native/libs/下面的对应平台的so动态链接库，拷贝到工程app/src/main/jniLibs/下。使得目录结构如下
+- 解压得到OpenCV-android-sdk/sdk/native/libs/下面的对应平台的so动态链接库，拷贝到工程grains-svm/src/main/jniLibs/下。使得目录结构如下
 
-		app/src/main/jniLibs/
+		grains-svm/src/main/jniLibs/
 		├── armeabi-v7a
 		│   ├── libopencv_info.so
 		│   └── libopencv_java.so
@@ -31,7 +33,7 @@
 
 		android.useDeprecatedNdk=true
 
-- Android Virtual Device下载对应CPU架构的虚拟机（可选）以方便调试。比如我是x86，不选x86_64，因为cv库没有这个x64平台
+- Android Virtual Device下载对应CPU架构的虚拟机（可选）以方便调试。比如我是x86（不选x86_64是因为cv库没有预编译x64平台）
 
 ### C和gamma值的调优
 
