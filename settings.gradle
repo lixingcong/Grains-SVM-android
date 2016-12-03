@@ -1,2 +1,2 @@
-include ':app'
+include ':grains-svm', ':cropper'
 include ':openCVLibrary24131'

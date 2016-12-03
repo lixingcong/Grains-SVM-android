@@ -40,4 +40,4 @@ Thumbs.db
 .navigation/
 
 # jni native Libs
-app/src/main/jniLibs/
+grains-svm/src/main/jniLibs/

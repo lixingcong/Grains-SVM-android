@@ -1,0 +1,9 @@
+.gradle
+/local.properties
+
+/build
+/captures
+.externalNativeBuild
+
+# genarated files
+import-summary.txt
