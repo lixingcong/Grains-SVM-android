@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file:///mydata/home/AndroidStudioProjects/Grain-android/Grain-android.iml" filepath="/mydata/home/AndroidStudioProjects/Grain-android/Grain-android.iml" />
+      <module fileurl="file:///mydata/home/AndroidStudioProjects/Grain-android/app/app.iml" filepath="/mydata/home/AndroidStudioProjects/Grain-android/app/app.iml" />
+      <module fileurl="file:///mydata/home/AndroidStudioProjects/Grain-android/openCVLibrary24131/openCVLibrary24131.iml" filepath="/mydata/home/AndroidStudioProjects/Grain-android/openCVLibrary24131/openCVLibrary24131.iml" />
+    </modules>
+  </component>
+</project>

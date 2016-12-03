@@ -1,4 +1,4 @@
-package li.grain2;
+package li.grain;
 
 import org.junit.Test;
 

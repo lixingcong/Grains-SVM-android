@@ -1,4 +1,4 @@
-package li.grain2;
+package li.grain;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

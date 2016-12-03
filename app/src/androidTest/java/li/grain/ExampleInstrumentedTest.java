@@ -1,4 +1,4 @@
-package li.grain2;
+package li.grain;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
