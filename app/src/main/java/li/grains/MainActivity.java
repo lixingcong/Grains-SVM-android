@@ -1,10 +1,5 @@
 package li.grains;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,22 +25,25 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-
-	private TextView text1=null;
-	private Button btn_run_svm;
-	private Button btn_perform_download_features;
-	private Button btn_update_features;
-	private Button btn_change_svm_params;
-	private LinearLayout layout_update_features;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		// check for permissons
-		CheckPermissons checkPermissons=new CheckPermissons(MainActivity.this);
-		checkPermissons.check();
+		(new CheckPermissons(MainActivity.this)).check();
+
+		// set up all my view
+		set_my_view();
+
+		// OpenCV demo
+		cv_demo();
+	}
+
+	private void set_my_view(){
+		Button btn_perform_download_features;
+		Button btn_update_features;
+		final LinearLayout layout_update_features;
 
 		// layout hide or show
 		layout_update_features=(LinearLayout)findViewById(R.id.layout_main_update);
@@ -68,13 +66,14 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				String update_url=((EditText)findViewById(R.id.edittext_main_url)).getText().toString();
-//				Toast.makeText(MainActivity.this,update_url,Toast.LENGTH_SHORT).show();
 				DownloadFile dl=new DownloadFile(MainActivity.this,getString(R.string.update_filename));
 				dl.execute(update_url);
 			}
 		});
+	}
 
-
+	private void cv_demo(){
+		TextView text1=null;
 		Mat m = new Mat(5, 10, CvType.CV_8UC1, new Scalar(0));
 		Mat mr1 = m.row(1);
 		mr1.setTo(new Scalar(1));
@@ -84,6 +83,4 @@ public class MainActivity extends AppCompatActivity {
 		text1=(TextView)findViewById(R.id.textview_main_text1);
 		text1.setText(m.dump());
 	}
-
-
 }
