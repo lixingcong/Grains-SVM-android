@@ -38,3 +38,6 @@ Thumbs.db
 
 # Android Studio Navigation editor temp files
 .navigation/
+
+# jni native Libs
+app/src/main/jniLibs/
