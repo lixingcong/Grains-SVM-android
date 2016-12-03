@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Grains_SVM</string>
+    <string name="updata_url">http://lixingcong.com/s/1.txt</string>
 </resources>
