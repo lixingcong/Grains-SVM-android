@@ -30,15 +30,8 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	final public static int REQUEST_CODE_ASK_FOR_PERMISSONS = 0;
-	final private String[] all_permissions=new String[]{
-			Manifest.permission.CAMERA,
-			Manifest.permission.READ_EXTERNAL_STORAGE,
-			Manifest.permission.WRITE_EXTERNAL_STORAGE,
-			Manifest.permission.INTERNET
-	};
-	private TextView text1=null;
 
+	private TextView text1=null;
 	private Button btn_run_svm;
 	private Button btn_perform_download_features;
 	private Button btn_update_features;
@@ -49,12 +42,10 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		ask_for_all_permissions();
-		if(check_if_permissions_got()==false){
-			Toast.makeText(getApplicationContext(),"Could not get permissons",Toast.LENGTH_SHORT).show();
-		}else{
-			Toast.makeText(getApplicationContext(),"Good permissions",Toast.LENGTH_SHORT).show();
-		}
+
+		// check for permissons
+		CheckPermissons checkPermissons=new CheckPermissons(MainActivity.this);
+		checkPermissons.check();
 
 		// layout hide or show
 		layout_update_features=(LinearLayout)findViewById(R.id.layout_main_update);
@@ -94,24 +85,5 @@ public class MainActivity extends AppCompatActivity {
 		text1.setText(m.dump());
 	}
 
-	public void ask_for_all_permissions(){
-		if (Build.VERSION.SDK_INT >= 23) {
-			if(check_if_permissions_got()==false){
-				ActivityCompat.requestPermissions(this,all_permissions, REQUEST_CODE_ASK_FOR_PERMISSONS);
-			}else{
-				// already permit
-			}
-		} else {
-			// API was lower than 23
-			Toast.makeText(getApplicationContext(),"API not need to ask for permission",Toast.LENGTH_SHORT).show();
-		}
-	}
 
-	private boolean check_if_permissions_got(){
-		for(String i:all_permissions){
-			if(ContextCompat.checkSelfPermission(getApplicationContext(),i) == PackageManager.PERMISSION_DENIED)
-				return false;
-		}
-		return true;
-	}
 }
