@@ -1,4 +1,4 @@
-package li.grain;
+package li.grains;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
