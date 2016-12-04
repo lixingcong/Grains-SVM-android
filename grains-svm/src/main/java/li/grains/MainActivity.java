@@ -23,13 +23,13 @@ import org.opencv.core.Scalar;
 
 public class MainActivity extends AppCompatActivity {
 
-//	static {
-//		if(!OpenCVLoader.initDebug()){
-//			Log.d("MAIN", "OpenCV not loaded");
-//		} else {
-//			Log.d("MAIN", "OpenCV loaded");
-//		}
-//	}
+	static {
+		if(!OpenCVLoader.initDebug()){
+			Log.d("MAIN", "OpenCV not loaded");
+		} else {
+			Log.d("MAIN", "OpenCV loaded");
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +53,6 @@ public class MainActivity extends AppCompatActivity {
 			String C=data.getExtras().getString("C");
 			String gamma=data.getExtras().getString("gamma");
 			text_params.setText(C+", "+gamma);
-		}else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-			CropImage.ActivityResult result = CropImage.getActivityResult(data);
-			if (resultCode == RESULT_OK) {
-				((ImageView) findViewById(R.id.imageview_main_showimg)).setImageURI(result.getUri());
-				Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
-			} else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-				Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
-			}
 		}
 	}
 
@@ -76,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
 		btn_run_svm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startCropImageActivity(null);
+				Intent intent=new Intent(MainActivity.this,RunSVMActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -136,18 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
 		text1=(TextView)findViewById(R.id.textview_main_text1);
 		text1.setText(m.dump());
-	}
-
-	private void startCropImageActivity(Uri imageUri) {
-		CropImage.activity(imageUri)
-				.setGuidelines(CropImageView.Guidelines.ON)
-				.setMultiTouchEnabled(true)
-				.setAllowRotation(true)
-				.setAspectRatio(1,1)
-				.setFixAspectRatio(true)
-				.setAllowCounterRotation(true)
-				.setAutoZoomEnabled(false)
-				.start(this);
 	}
 
 }
