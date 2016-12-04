@@ -100,7 +100,7 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 				Log.e("Error", e.getMessage());
 				e.printStackTrace();
 			}
-		
+
 		running=false;
 		return null;
 	}
