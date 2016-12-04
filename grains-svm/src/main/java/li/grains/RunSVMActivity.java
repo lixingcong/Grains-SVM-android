@@ -2,25 +2,29 @@ package li.grains;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.List;
 
 import li.grains.ml.My_Features;
 import li.grains.ml.My_SVM;
 
 public class RunSVMActivity extends AppCompatActivity {
 
-	private My_Features my_features=null;
+	private My_Features features_train =null;
 	private My_SVM my_svm=null;
 	private boolean is_svm_has_been_intialized;
+	private boolean is_got_train_features;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class RunSVMActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_run_svm);
 		set_my_view();
 		is_svm_has_been_intialized=false;
+		is_got_train_features=false;
 	}
 
 	@Override
@@ -111,6 +116,7 @@ public class RunSVMActivity extends AppCompatActivity {
 		double gamma=parseSharePref.getDouble("gamma");
 		my_svm=new My_SVM(C,gamma);
 		is_svm_has_been_intialized=true;
+		loadTrainFeatures();
 	}
 
 	private boolean check_if_SVM_params_set(){
@@ -122,5 +128,13 @@ public class RunSVMActivity extends AppCompatActivity {
 			return false;
 		}
 		return true;
+	}
+
+	private void loadTrainFeatures(){
+		features_train =new My_Features("",getString(R.string.update_filename));
+		features_train.load_saved_features();
+		List<Double> y=features_train.get_features_y();
+		TextView text1=(TextView)findViewById(R.id.textview_runsvm_text1);
+		text1.setText(Integer.toString(y.size()));
 	}
 }
