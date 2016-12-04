@@ -1,10 +1,12 @@
 package li.grains;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +27,8 @@ public class RunSVMActivity extends AppCompatActivity {
 	private My_SVM my_svm=null;
 	private boolean is_svm_has_been_intialized;
 	private boolean is_got_train_features;
+	private List<Double> train_y=null;
+	private List<List<Double>> train_x=null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,12 +115,34 @@ public class RunSVMActivity extends AppCompatActivity {
 	}
 
 	private void initSVM(){
-		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
-		double C=parseSharePref.getDouble("C");
-		double gamma=parseSharePref.getDouble("gamma");
-		my_svm=new My_SVM(C,gamma);
-		is_svm_has_been_intialized=true;
-		loadTrainFeatures();
+		final ProgressDialog progress=new ProgressDialog(this);
+		// please wait
+		progress.setTitle("Initializing SVM...");
+		progress.setMessage("Please wait for a while");
+		progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+		progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		progress.setIndeterminate(true);
+		progress.show();
+
+		Thread mThread = new Thread() {
+			@Override
+			public void run() {
+				// init svm
+				ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
+				double C=parseSharePref.getDouble("C");
+				double gamma=parseSharePref.getDouble("gamma");
+				my_svm=new My_SVM(C,gamma);
+				is_svm_has_been_intialized=true;
+
+				// load features
+				if(is_got_train_features==false)
+					loadTrainFeatures();
+
+				// dismiss it
+				progress.dismiss();
+			}
+		};
+		mThread.start();
 	}
 
 	private boolean check_if_SVM_params_set(){
@@ -133,8 +159,8 @@ public class RunSVMActivity extends AppCompatActivity {
 	private void loadTrainFeatures(){
 		features_train =new My_Features("",getString(R.string.update_filename));
 		features_train.load_saved_features();
-		List<Double> y=features_train.get_features_y();
-		TextView text1=(TextView)findViewById(R.id.textview_runsvm_text1);
-		text1.setText(Integer.toString(y.size()));
+		train_y=features_train.get_features_y();
+		train_x=features_train.get_features_x();
+		is_got_train_features=true;
 	}
 }
