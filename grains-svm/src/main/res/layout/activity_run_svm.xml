@@ -54,13 +54,15 @@
         android:layout_marginTop="60dp"
         android:layout_alignTop="@id/layout_runsvm_buttons_top">
 
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/imageview_runsvm_inputimg"
-            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
             android:layout_centerHorizontal="true"
-            />
+            android:scaleType="fitCenter"/>
+
 
         <ImageView
             android:layout_width="80dp"
