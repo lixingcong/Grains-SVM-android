@@ -3,6 +3,9 @@
     <string name="updata_url">https://lixingcong.com/s/grain_features.csv</string>
     <string name="update_filename">grain_features.csv</string>
     <string name="share_pref_svm_param">share_pref_svm_param</string>
+    <string name="button_main_run_svm">Run SVM</string>
+    <string name="button_main_update">Update features</string>
+    <string name="button_main_setsvm">Set SVM params</string>
 
     <string-array name="svm_params">
         <item>8.0,0.0078125</item>

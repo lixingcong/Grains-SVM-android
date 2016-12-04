@@ -45,6 +45,9 @@ public class RunSVMActivity extends AppCompatActivity {
 		final Button btn_run=(Button)findViewById(R.id.button_runsvm_run);
 		final ImageView imageview_add_logo=(ImageView)findViewById(R.id.imageview_runsvm_addlogo);
 
+		// set title
+		setTitle("Run SVM");
+
 		// get pic
 		btn_get_pic.setOnClickListener(new View.OnClickListener() {
 			@Override
