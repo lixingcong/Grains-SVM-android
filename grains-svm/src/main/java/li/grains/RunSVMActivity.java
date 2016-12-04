@@ -4,23 +4,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.util.List;
-
-import li.grains.ml.My_CSV;
+import li.grains.ml.My_Features;
+import li.grains.ml.My_SVM;
 
 public class RunSVMActivity extends AppCompatActivity {
+
+	private My_Features my_features=null;
+	private My_SVM my_svm=null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,8 @@ public class RunSVMActivity extends AppCompatActivity {
 		btn_run.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				loadCSV(getString(R.string.update_filename));
+				if(check_if_SVM_params_set())
+					initSVM();
 			}
 		});
 	}
@@ -99,10 +99,24 @@ public class RunSVMActivity extends AppCompatActivity {
 				.start(this);
 	}
 
-	private void loadCSV(String csv_file){
-		My_CSV mycsv=new My_CSV(csv_file);
-		List<String> res=mycsv.read();
-		TextView textview1=(TextView)findViewById(R.id.textview_runsvm_text1);
-		textview1.setText(res.get(0));
+	private void initSVM(){
+		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
+		double C=parseSharePref.getDouble("C");
+		double gamma=parseSharePref.getDouble("gamma");
+		Log.v("Run",Double.toString(C));
+		Log.v("Run",Double.toString(gamma));
+		my_svm=new My_SVM(C,gamma);
+	}
+
+	private boolean check_if_SVM_params_set(){
+		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
+		if(parseSharePref.contains(getString(R.string.share_pref_is_set_param))==false){
+			Log.v("Run","here");
+			Intent intent=new Intent(getApplicationContext(),SVMParamsActivity.class);
+			startActivity(intent);
+			Toast.makeText(getApplicationContext(),"Please set params first",Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
 	}
 }
