@@ -179,4 +179,12 @@ public class My_Features {
 	public List<List<Double>> get_features_x() {
 		return x;
 	}
+
+	public String get_all_chinese(){
+		String res="";
+		for (Map.Entry<String, String> entry : dict_category_to_chinese.entrySet()) {
+			res+=(entry.getValue()+"\n");
+		}
+		return res;
+	}
 }

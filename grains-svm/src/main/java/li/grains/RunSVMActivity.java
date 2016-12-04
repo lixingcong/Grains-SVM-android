@@ -1,9 +1,11 @@
 package li.grains;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,6 +99,16 @@ public class RunSVMActivity extends AppCompatActivity {
 		});
 
 		// show trained images
+		btn_trained_pic.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String all_trained_sample=features_train.get_all_chinese();
+				final AlertDialog.Builder alertDialog = new AlertDialog.Builder(RunSVMActivity.this, android.R.style.Theme_Material_Light_Dialog_Alert);
+				alertDialog.setTitle("All trained samples");
+				alertDialog.setMessage(all_trained_sample);
+				alertDialog.show();
+			}
+		});
 
 		// run svm
 		btn_run.setOnClickListener(new View.OnClickListener() {
