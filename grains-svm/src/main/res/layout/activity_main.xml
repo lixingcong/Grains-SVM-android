@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textview_main_text1"
-        android:text="xx"/>
+        android:text="@string/textview_default_text"/>
 
 
 </LinearLayout>
