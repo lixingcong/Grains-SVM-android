@@ -10,10 +10,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.List;
+
+import li.grains.ml.My_CSV;
 
 public class RunSVMActivity extends AppCompatActivity {
 
@@ -65,6 +70,12 @@ public class RunSVMActivity extends AppCompatActivity {
 		// show trained images
 
 		// run svm
+		btn_run.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				loadCSV(getString(R.string.update_filename));
+			}
+		});
 	}
 
 	private void set_add_img_visible(boolean is_display){
@@ -86,5 +97,12 @@ public class RunSVMActivity extends AppCompatActivity {
 				.setAllowCounterRotation(true)
 				.setAutoZoomEnabled(false)
 				.start(this);
+	}
+
+	private void loadCSV(String csv_file){
+		My_CSV mycsv=new My_CSV(csv_file);
+		List<String> res=mycsv.read();
+		TextView textview1=(TextView)findViewById(R.id.textview_runsvm_text1);
+		textview1.setText(res.get(0));
 	}
 }
