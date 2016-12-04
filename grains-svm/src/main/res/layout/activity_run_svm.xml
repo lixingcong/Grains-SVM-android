@@ -15,7 +15,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_runsvm_buttons_top">
 
         <Button
             android:id="@+id/button_runsvm_getpic"
@@ -44,14 +45,14 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/layout_runsvm_inputimg"
         android:layout_width="match_parent"
         android:layout_weight="0.16"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
         android:layout_height="300dp"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/background_imageview_runsvm">
+        android:background="@drawable/background_imageview_runsvm"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="60dp"
+        android:layout_alignTop="@id/layout_runsvm_buttons_top">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -71,12 +72,19 @@
             />
     </RelativeLayout>
 
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/layout_runsvm_inputimg"
+                android:layout_marginTop="13dp">
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/textview_runsvm_text1"
         android:text="xx"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="80dp"/>
+        />
+
+    </ScrollView>
 
 </RelativeLayout>
