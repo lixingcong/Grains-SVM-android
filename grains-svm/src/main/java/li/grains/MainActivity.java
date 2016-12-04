@@ -23,11 +23,14 @@ import org.opencv.core.Scalar;
 
 public class MainActivity extends AppCompatActivity {
 
+	static boolean is_opencv_loaded;
 	static {
 		if(!OpenCVLoader.initDebug()){
 			Log.d("MAIN", "OpenCV not loaded");
+			is_opencv_loaded=false;
 		} else {
 			Log.d("MAIN", "OpenCV loaded");
+			is_opencv_loaded=true;
 		}
 	}
 
@@ -35,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		// check if CV is loaded
+		if(!is_opencv_loaded){
+			Toast.makeText(MainActivity.this,"OpenCV native-lib load error",Toast.LENGTH_LONG).show();
+		}
 
 		// check for permissons
 		(new CheckPermissons(MainActivity.this)).check();
