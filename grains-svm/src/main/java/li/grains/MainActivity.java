@@ -1,25 +1,20 @@
 package li.grains;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-
 import org.opencv.android.OpenCVLoader;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
 		// set up all my view
 		set_my_view();
-
-		// OpenCV demo
-		//cv_demo();
 	}
 
 	@Override
@@ -76,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
 		btn_run_svm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent=new Intent(MainActivity.this,RunSVMActivity.class);
-				startActivity(intent);
+				if(check_if_csv_exist()){
+					Intent intent=new Intent(MainActivity.this,RunSVMActivity.class);
+					startActivity(intent);
+				}
 			}
 		});
 
@@ -127,16 +121,15 @@ public class MainActivity extends AppCompatActivity {
 		});
 	}
 
-	private void cv_demo(){
-		TextView text1=null;
-		Mat m = new Mat(5, 10, CvType.CV_8UC1, new Scalar(0));
-		Mat mr1 = m.row(1);
-		mr1.setTo(new Scalar(1));
-		Mat mc5 = m.col(5);
-		mc5.setTo(new Scalar(5));
-
-		text1=(TextView)findViewById(R.id.textview_main_text1);
-		text1.setText(m.dump());
+	private boolean check_if_csv_exist(){
+		String filepath = Environment.getExternalStorageDirectory().getPath();
+		String filename=filepath+"/"+getString(R.string.update_filename);
+		File file = new File(filename);
+		if(!file.exists()){
+			Toast.makeText(getApplicationContext(),"Please update features",Toast.LENGTH_LONG).show();
+			return false;
+		}
+		return true;
 	}
 
 }

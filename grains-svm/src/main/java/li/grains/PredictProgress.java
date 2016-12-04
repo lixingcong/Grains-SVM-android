@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
 
 import java.util.List;
 
@@ -59,7 +58,6 @@ public class PredictProgress extends AsyncTask<Void, Void, Void> {
 		if(!is_finish) {
 			String filename_save = Environment.getExternalStorageDirectory().getPath();
 			filename_save += ("/" + filename);
-			Log.v("SVM", filename_save);
 			My_Features features_test = new My_Features(filename_save);
 			List<List<Double>> test_x = features_test.get_features_x();
 			List<Double> predict_y = my_svm.predict(test_x);

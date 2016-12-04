@@ -38,7 +38,7 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 		// Create progress dialog
 		mProgressDialog = new ProgressDialog(context);
 		// Set your progress dialog Title
-		mProgressDialog.setTitle("filename: "+save_filename);
+		mProgressDialog.setTitle("Save to: "+save_filename);
 		// Set your progress dialog Message
 		mProgressDialog.setMessage("Downloading, Please Wait!");
 		mProgressDialog.setIndeterminate(false);

@@ -2,7 +2,6 @@ package li.grains;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +46,7 @@ public class RunSVMActivity extends AppCompatActivity {
 		is_got_train_features=false;
 		is_cropped=false;
 
+		// check if C and gamma was set
 		if(check_if_SVM_params_set()==true)
 			initSVM();
 	}
@@ -208,4 +208,5 @@ public class RunSVMActivity extends AppCompatActivity {
 			is_cropped=false;
 		}
 	}
+
 }
