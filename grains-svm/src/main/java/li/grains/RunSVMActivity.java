@@ -105,8 +105,10 @@ public class RunSVMActivity extends AppCompatActivity {
 				if(is_svm_has_been_intialized==false)
 					initSVM();
 
-				if(is_cropped && is_svm_has_been_intialized)
-					predict_this_picture();
+				if(is_cropped && is_svm_has_been_intialized) {
+					PredictProgress predictProgress=new PredictProgress(RunSVMActivity.this,my_svm,features_train,getString(R.string.img_filename_cropped));
+					predictProgress.execute();
+				}
 			}
 		});
 	}
@@ -205,16 +207,5 @@ public class RunSVMActivity extends AppCompatActivity {
 			ex.printStackTrace();
 			is_cropped=false;
 		}
-	}
-
-	private void predict_this_picture(){
-		String filename = Environment.getExternalStorageDirectory().getPath();
-		filename+=("/"+getString(R.string.img_filename_cropped));
-		Log.v("SVM",filename);
-		My_Features features_test=new My_Features(filename);
-		List<List<Double>> test_x=features_test.get_features_x();
-		List<Double> predict_y= my_svm.predict(test_x);
-		String result=features_train.get_chinese_from_category(new Double(predict_y.get(0)).intValue());
-		Toast.makeText(RunSVMActivity.this, "Result: "+result, Toast.LENGTH_LONG).show();
 	}
 }
