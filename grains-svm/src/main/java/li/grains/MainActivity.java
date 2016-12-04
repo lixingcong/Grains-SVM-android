@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 		// load last svm params
 		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
 		TextView text_params=(TextView)findViewById(R.id.textview_main_text2);
-		if(parseSharePref.contains("is_set_param")){
+		if(parseSharePref.contains(getString(R.string.share_pref_is_set_param))){
 			String C=parseSharePref.getString("C");
 			String gamma=parseSharePref.getString("gamma");
 			text_params.setText(C+", "+gamma);

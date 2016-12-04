@@ -35,8 +35,8 @@ public class SVMParamsActivity extends AppCompatActivity {
 				ps.setString("gamma",item_splited[1]);
 
 				// mark as set
-				if(ps.contains("is_set_param")==false){
-					ps.setString("is_set_param","true");
+				if(ps.contains(getString(R.string.share_pref_is_set_param))==false){
+					ps.setString(getString(R.string.share_pref_is_set_param),"true");
 				}
 
 				// return Activity result
