@@ -20,12 +20,14 @@ public class RunSVMActivity extends AppCompatActivity {
 
 	private My_Features my_features=null;
 	private My_SVM my_svm=null;
+	private boolean is_svm_has_been_intialized;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_run_svm);
 		set_my_view();
+		is_svm_has_been_intialized=false;
 	}
 
 	@Override
@@ -72,7 +74,11 @@ public class RunSVMActivity extends AppCompatActivity {
 		btn_run.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(check_if_SVM_params_set())
+				// we should check is params were set before
+				if(check_if_SVM_params_set()==false)
+					return;
+
+				if(is_svm_has_been_intialized==false)
 					initSVM();
 			}
 		});
@@ -103,15 +109,13 @@ public class RunSVMActivity extends AppCompatActivity {
 		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
 		double C=parseSharePref.getDouble("C");
 		double gamma=parseSharePref.getDouble("gamma");
-		Log.v("Run",Double.toString(C));
-		Log.v("Run",Double.toString(gamma));
 		my_svm=new My_SVM(C,gamma);
+		is_svm_has_been_intialized=true;
 	}
 
 	private boolean check_if_SVM_params_set(){
 		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
 		if(parseSharePref.contains(getString(R.string.share_pref_is_set_param))==false){
-			Log.v("Run","here");
 			Intent intent=new Intent(getApplicationContext(),SVMParamsActivity.class);
 			startActivity(intent);
 			Toast.makeText(getApplicationContext(),"Please set params first",Toast.LENGTH_SHORT).show();
