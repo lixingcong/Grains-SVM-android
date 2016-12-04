@@ -46,6 +46,9 @@ public class RunSVMActivity extends AppCompatActivity {
 		is_svm_has_been_intialized=false;
 		is_got_train_features=false;
 		is_cropped=false;
+
+		if(check_if_SVM_params_set()==true)
+			initSVM();
 	}
 
 	@Override
@@ -99,10 +102,6 @@ public class RunSVMActivity extends AppCompatActivity {
 		btn_run.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// we should check is params were set before
-				if(check_if_SVM_params_set()==false)
-					return;
-
 				if(is_svm_has_been_intialized==false)
 					initSVM();
 
@@ -216,6 +215,6 @@ public class RunSVMActivity extends AppCompatActivity {
 		List<List<Double>> test_x=features_test.get_features_x();
 		List<Double> predict_y= my_svm.predict(test_x);
 		String result=features_train.get_chinese_from_category(new Double(predict_y.get(0)).intValue());
-		textview1.setText(result);
+		Toast.makeText(RunSVMActivity.this, "Result: "+result, Toast.LENGTH_LONG).show();
 	}
 }
