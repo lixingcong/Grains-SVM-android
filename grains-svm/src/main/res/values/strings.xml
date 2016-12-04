@@ -11,6 +11,7 @@
     <string name="button_runsvm_trained_img">trained samples</string>
     <string name="button_runsvm_run">Run</string>
     <string name="textview_default_text">default text</string>
+    <string name="img_filename_cropped">grain_cropped.jpg</string>
 
     <string-array name="svm_params">
         <item>8.0,0.0078125</item>
