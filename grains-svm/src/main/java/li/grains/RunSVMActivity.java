@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +18,9 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.List;
 
 import li.grains.ml.My_Features;
@@ -52,7 +53,9 @@ public class RunSVMActivity extends AppCompatActivity {
 		if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 			CropImage.ActivityResult result = CropImage.getActivityResult(data);
 			if (resultCode == RESULT_OK) {
-				save_bitmap_to_local(result.getBitmap(),getString(R.string.img_filename_cropped));
+				// save cropped picture to local
+				save_Uri_to_local(result.getUri(),getString(R.string.img_filename_cropped));
+
 				((ImageView) findViewById(R.id.imageview_runsvm_inputimg)).setImageURI(result.getUri());
 				Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
 				set_add_img_visible(false);
@@ -103,7 +106,7 @@ public class RunSVMActivity extends AppCompatActivity {
 				if(is_svm_has_been_intialized==false)
 					initSVM();
 
-				if(is_cropped)
+				if(is_cropped && is_svm_has_been_intialized)
 					predict_this_picture();
 			}
 		});
@@ -148,7 +151,6 @@ public class RunSVMActivity extends AppCompatActivity {
 				double C=parseSharePref.getDouble("C");
 				double gamma=parseSharePref.getDouble("gamma");
 				my_svm=new My_SVM(C,gamma);
-				is_svm_has_been_intialized=true;
 
 				// load features
 				if(is_got_train_features==false)
@@ -159,6 +161,7 @@ public class RunSVMActivity extends AppCompatActivity {
 
 				// dismiss it
 				progress.dismiss();
+				is_svm_has_been_intialized=true;
 			}
 		};
 		mThread.start();
@@ -183,23 +186,25 @@ public class RunSVMActivity extends AppCompatActivity {
 		is_got_train_features=true;
 	}
 
-	private void save_bitmap_to_local(Bitmap bitmap,String filename){
-		FileOutputStream out = null;
+	private void save_Uri_to_local(Uri imgUri, String filename){
+		String filepath = Environment.getExternalStorageDirectory().getPath();
+		final int chunkSize = 1024;  // We'll read in one kB at a time
+		byte[] imageData = new byte[chunkSize];
+
 		try {
-			// Locate storage location
-			String filepath = Environment.getExternalStorageDirectory().getPath();
-			out = new FileOutputStream(filepath+"/"+filename);
-			bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (out != null) {
-					out.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+			InputStream in = getContentResolver().openInputStream(imgUri);
+			OutputStream out = new FileOutputStream(filepath+"/"+filename);
+			int bytesRead;
+			while ((bytesRead = in.read(imageData)) > 0) {
+				out.write(Arrays.copyOfRange(imageData, 0, Math.max(0, bytesRead)));
 			}
+			in.close();
+			out.close();
+			is_cropped=true;
+		} catch (Exception ex) {
+			Log.e("URI", ex.toString());
+			ex.printStackTrace();
+			is_cropped=false;
 		}
 	}
 
