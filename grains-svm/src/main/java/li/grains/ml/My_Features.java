@@ -143,9 +143,8 @@ public class My_Features {
 		My_Preprocess mypreprocess = new My_Preprocess(filename);
 
 		// RGB features
-		double[] RGB = myutils.get_rgb_normolized(mypreprocess.get_img(), mypreprocess.get_img_binary());
-		this_feature.add(RGB[0]);
-		this_feature.add(RGB[1]);
+		double Hue = myutils.get_Hue(mypreprocess.get_img(), mypreprocess.get_img_binary());
+		this_feature.add(Hue);
 
 		// Hu(1)
 		My_Shape myshape = new My_Shape(mypreprocess.get_img_gray());
