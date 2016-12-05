@@ -1,7 +1,6 @@
 package li.grains;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -219,4 +218,9 @@ public class RunSVMActivity extends AppCompatActivity {
 		}
 	}
 
+	@Override
+	public void finish() {
+		super.finish();
+		overridePendingTransition(R.anim.slide_back_in, R.anim.slide_back_out);
+	}
 }
