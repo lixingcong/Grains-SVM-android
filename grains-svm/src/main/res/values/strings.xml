@@ -15,10 +15,4 @@
     <string name="textview_default_text">default text</string>
     <string name="img_filename_cropped">grain_cropped.jpg</string>
 
-    <string-array name="svm_params">
-        <item>8.0,0.0078125</item>
-        <item>8.0,0.001953125</item>
-        <item>32.0,0.001953125</item>
-        <item>512.0,0.0001220703125</item>
-    </string-array>
 </resources>
