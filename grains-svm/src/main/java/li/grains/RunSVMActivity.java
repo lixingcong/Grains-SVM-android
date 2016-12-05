@@ -62,11 +62,9 @@ public class RunSVMActivity extends AppCompatActivity {
 				save_Uri_to_local(result.getUri(),getString(R.string.img_filename_cropped));
 
 				((ImageView) findViewById(R.id.imageview_runsvm_inputimg)).setImageURI(result.getUri());
-				Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
 				set_add_img_visible(false);
 				is_cropped=true;
 			} else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-				Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
 				set_add_img_visible(true);
 				is_cropped=false;
 			}

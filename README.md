@@ -43,4 +43,6 @@
 
 使用[libsvm](http://www.csie.ntu.edu.tw/~cjlin/libsvm/)进行调优。
 
+![](/screenshot-1.jpg)
+
 日期：2016-12-3
