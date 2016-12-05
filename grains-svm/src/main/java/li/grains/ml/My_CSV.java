@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import li.grains.StoragePath;
+
 /**
  * Created by li on 16-12-4.
  */
@@ -21,10 +23,8 @@ public class My_CSV {
 	List<String> content_read = null;
 
 	public My_CSV(String csv_file) {
-		// Locate storage location
-		String filepath = Environment.getExternalStorageDirectory()
-				.getPath();
-		this.csv_file = filepath+"/"+csv_file;
+		StoragePath storagePath = new StoragePath();
+		this.csv_file =storagePath.getPath() + csv_file;
 	}
 
 	private void read_all() {

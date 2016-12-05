@@ -56,9 +56,8 @@ public class PredictProgress extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		if(!is_finish) {
-			String filename_save = Environment.getExternalStorageDirectory().getPath();
-			filename_save += ("/" + filename);
-			My_Features features_test = new My_Features(filename_save);
+			StoragePath storagePath=new StoragePath();
+			My_Features features_test = new My_Features(storagePath.getPath()+filename);
 			List<List<Double>> test_x = features_test.get_features_x();
 			List<Double> predict_y = my_svm.predict(test_x);
 			result = my_features.get_chinese_from_category(new Double(predict_y.get(0)).intValue());

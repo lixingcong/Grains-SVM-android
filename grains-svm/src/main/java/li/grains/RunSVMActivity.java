@@ -197,13 +197,13 @@ public class RunSVMActivity extends AppCompatActivity {
 	}
 
 	private void save_Uri_to_local(Uri imgUri, String filename){
-		String filepath = Environment.getExternalStorageDirectory().getPath();
+		StoragePath storagePath=new StoragePath();
 		final int chunkSize = 1024;  // We'll read in one kB at a time
 		byte[] imageData = new byte[chunkSize];
 
 		try {
 			InputStream in = getContentResolver().openInputStream(imgUri);
-			OutputStream out = new FileOutputStream(filepath+"/"+filename);
+			OutputStream out = new FileOutputStream(storagePath.getPath()+filename);
 			int bytesRead;
 			while ((bytesRead = in.read(imageData)) > 0) {
 				out.write(Arrays.copyOfRange(imageData, 0, Math.max(0, bytesRead)));

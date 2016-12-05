@@ -174,9 +174,8 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private boolean check_if_csv_exist(){
-		String filepath = Environment.getExternalStorageDirectory().getPath();
-		String filename=filepath+"/"+getString(R.string.update_features_filename);
-		File file = new File(filename);
+		StoragePath storagePath=new StoragePath();
+		File file = new File(storagePath.getPath()+getString(R.string.update_features_filename));
 		if(!file.exists()){
 			Toast.makeText(getApplicationContext(),"Please update features",Toast.LENGTH_LONG).show();
 			return false;

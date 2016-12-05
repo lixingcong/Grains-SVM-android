@@ -28,6 +28,7 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 	private List<String> urls,filenames;
 	private List<Integer> percents;
 	private int total_percent;
+	StoragePath storagePath=null;
 
 	public DownloadFile(Context context,List<String> urls,List<String> filenames,List<Integer> percents){
 		super();
@@ -36,6 +37,7 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 		this.filenames=filenames;
 		this.percents=percents;
 		this.total_percent=0;
+		this.storagePath=new StoragePath();
 	}
 
 	@Override
@@ -104,14 +106,11 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 			// Detect the file lenghth
 			int fileLength = connection.getContentLength();
 
-			// Locate storage location
-			String filepath = Environment.getExternalStorageDirectory().getPath();
-
 			// Download the file
 			InputStream input = new BufferedInputStream(url.openStream());
 
 			// Save the downloaded file
-			OutputStream output = new FileOutputStream(filepath + "/"+ filenames.get(misson_index));
+			OutputStream output = new FileOutputStream(storagePath.getPath()+filenames.get(misson_index));
 
 			byte data[] = new byte[1024];
 			long total = 0;
