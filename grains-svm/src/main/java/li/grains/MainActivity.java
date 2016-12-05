@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 				if(check_if_csv_exist()){
 					Intent intent=new Intent(MainActivity.this,RunSVMActivity.class);
 					startActivity(intent);
+					overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 				}
 			}
 		});
