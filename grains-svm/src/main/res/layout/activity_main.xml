@@ -27,17 +27,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="1.0"
         android:visibility="gone"
         android:id="@+id/layout_main_update">
 
         <EditText
-            android:layout_weight="0.9"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_main_url"
+            android:id="@+id/edittext_main_features_url"
             android:text="@string/updata_features_url"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_main_params_url"
+            android:text="@string/updata_params_url"/>
 
         <Button
             android:layout_width="wrap_content"

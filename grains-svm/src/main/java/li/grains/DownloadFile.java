@@ -14,22 +14,28 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 /**
  * Created by li on 16-12-3.
  */
 
-public class DownloadFile extends AsyncTask<String, Integer, String> {
+public class DownloadFile extends AsyncTask<Void, Integer, String> {
 
 	private ProgressDialog mProgressDialog;
 	private Context context;
-	private String save_filename;
 	private boolean running;
+	private List<String> urls,filenames;
+	private List<Integer> percents;
+	private int total_percent;
 
-	public DownloadFile(Context context,String save_filename){
+	public DownloadFile(Context context,List<String> urls,List<String> filenames,List<Integer> percents){
 		super();
 		this.context=context;
-		this.save_filename =save_filename;
+		this.urls=urls;
+		this.filenames=filenames;
+		this.percents=percents;
+		this.total_percent=0;
 	}
 
 	@Override
@@ -38,7 +44,7 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 		// Create progress dialog
 		mProgressDialog = new ProgressDialog(context);
 		// Set your progress dialog Title
-		mProgressDialog.setTitle("Save to: "+save_filename);
+		mProgressDialog.setTitle("HTTP");
 		// Set your progress dialog Message
 		mProgressDialog.setMessage("Downloading, Please Wait!");
 		mProgressDialog.setIndeterminate(false);
@@ -60,47 +66,11 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 	}
 
 	@Override
-	protected String doInBackground(String... params) {
-		if(running)
-			try {
-				URL url = new URL(params[0]);
-				URLConnection connection = url.openConnection();
-				connection.connect();
-
-				// Detect the file lenghth
-				int fileLength = connection.getContentLength();
-
-				// Locate storage location
-				String filepath = Environment.getExternalStorageDirectory()
-						.getPath();
-
-				// Download the file
-				InputStream input = new BufferedInputStream(url.openStream());
-
-				// Save the downloaded file
-				OutputStream output = new FileOutputStream(filepath + "/"
-						+ save_filename);
-
-				byte data[] = new byte[1024];
-				long total = 0;
-				int count;
-				while ((count = input.read(data)) != -1) {
-					total += count;
-					// Publish the progress
-					publishProgress((int) (total * 100 / fileLength));
-					output.write(data, 0, count);
-				}
-
-				// Close connection
-				output.flush();
-				output.close();
-				input.close();
-			} catch (Exception e) {
-				// Error Log
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
-			}
-
+	protected String doInBackground(Void... params) {
+		if(running){
+			for(int i=0;i<urls.size();i++)
+				download_a_file(i);
+		}
 		running=false;
 		return null;
 	}
@@ -110,6 +80,7 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 		super.onProgressUpdate(values);
 		// Update the progress dialog
 		mProgressDialog.setProgress(values[0]);
+		mProgressDialog.setTitle("Save to: "+filenames.get(values[1]));
 		// Dismiss the progress dialog
 		// mProgressDialog.dismiss();
 		if(values[0]==100){
@@ -124,4 +95,45 @@ public class DownloadFile extends AsyncTask<String, Integer, String> {
 		Toast.makeText(context, "Update was cancelled", Toast.LENGTH_SHORT).show();
 	}
 
+	private void download_a_file(int misson_index){
+		try {
+			URL url = new URL(urls.get(misson_index));
+			URLConnection connection = url.openConnection();
+			connection.connect();
+
+			// Detect the file lenghth
+			int fileLength = connection.getContentLength();
+
+			// Locate storage location
+			String filepath = Environment.getExternalStorageDirectory()
+					.getPath();
+
+			// Download the file
+			InputStream input = new BufferedInputStream(url.openStream());
+
+			// Save the downloaded file
+			OutputStream output = new FileOutputStream(filepath + "/"+ filenames.get(misson_index));
+
+			byte data[] = new byte[1024];
+			long total = 0;
+			int count;
+			while ((count = input.read(data)) != -1) {
+				total += count;
+				// Publish the progress
+				publishProgress(((int) (total * percents.get(misson_index) / fileLength)+total_percent),misson_index);
+				output.write(data, 0, count);
+			}
+
+			total_percent+=percents.get(misson_index);
+
+			// Close connection
+			output.flush();
+			output.close();
+			input.close();
+		} catch (Exception e) {
+			// Error Log
+			Log.e("Error", e.getMessage());
+			e.printStackTrace();
+		}
+	}
 }

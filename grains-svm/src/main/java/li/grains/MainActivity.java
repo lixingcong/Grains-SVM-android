@@ -15,6 +15,8 @@ import android.widget.Toast;
 import org.opencv.android.OpenCVLoader;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,9 +98,21 @@ public class MainActivity extends AppCompatActivity {
 		btn_perform_download_features.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String update_url=((EditText)findViewById(R.id.edittext_main_url)).getText().toString();
-				DownloadFile dl=new DownloadFile(MainActivity.this,getString(R.string.update_features_filename));
-				dl.execute(update_url);
+				List<String> urls= new ArrayList<String>();
+				List<String> filenames= new ArrayList<String>();
+				List<Integer> percents= new ArrayList<Integer>();
+
+				urls.add(((EditText)findViewById(R.id.edittext_main_features_url)).getText().toString());
+				urls.add(((EditText)findViewById(R.id.edittext_main_params_url)).getText().toString());
+
+				filenames.add(getString(R.string.update_features_filename));
+				filenames.add(getString(R.string.update_params_filename));
+
+				percents.add(new Integer(95));
+				percents.add(new Integer(5));
+
+				DownloadFile dl=new DownloadFile(MainActivity.this,urls,filenames,percents);
+				dl.execute();
 			}
 		});
 
