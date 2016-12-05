@@ -36,19 +36,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edittext_main_features_url"
-            android:text="@string/updata_features_url"/>
+            android:text="@string/update_features_url"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edittext_main_params_url"
-            android:text="@string/updata_params_url"/>
+            android:text="@string/update_params_url"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_main_perform_update"
-            android:text="download"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_main_perform_update"
+                android:text="download"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_main_update_url_save"
+                android:text="save"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_main_update_url_reset"
+                android:text="reset"/>
+
+        </LinearLayout>
+
+
+
 
     </LinearLayout>
 

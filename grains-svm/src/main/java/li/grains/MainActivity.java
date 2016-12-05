@@ -59,11 +59,15 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void set_my_view(){
-		Button btn_perform_download_features;
-		Button btn_update_features;
-		Button btn_change_svm_params;
-		Button btn_run_svm;
+		final Button btn_perform_download_features;
+		final Button btn_update_features;
+		final Button btn_change_svm_params;
+		final Button btn_run_svm;
+		final Button btn_reset_edittext;
+		final Button btn_save_edittext;
 		final LinearLayout layout_update_features;
+		final EditText edittext_features_url=((EditText)findViewById(R.id.edittext_main_features_url));
+		final EditText edittext_params_url=((EditText)findViewById(R.id.edittext_main_params_url));
 
 		// run svm: pick up a photo
 		btn_run_svm=(Button)findViewById(R.id.button_main_run_svm);
@@ -77,6 +81,13 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+
+		// check if had saved urls to share pref
+		ParseSharePref psp=new ParseSharePref(getString(R.string.share_pref_features_urls),MainActivity.this);
+		if(psp.contains(getString(R.string.update_features_url))){
+			edittext_features_url.setText(psp.getString(getString(R.string.update_features_url)));
+			edittext_params_url.setText(psp.getString(getString(R.string.update_params_url)));
+		}
 
 		// layout hide or show
 		layout_update_features=(LinearLayout)findViewById(R.id.layout_main_update);
@@ -102,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
 				List<String> filenames= new ArrayList<String>();
 				List<Integer> percents= new ArrayList<Integer>();
 
-				urls.add(((EditText)findViewById(R.id.edittext_main_features_url)).getText().toString());
-				urls.add(((EditText)findViewById(R.id.edittext_main_params_url)).getText().toString());
+				urls.add(edittext_features_url.getText().toString());
+				urls.add(edittext_params_url.getText().toString());
 
 				filenames.add(getString(R.string.update_features_filename));
 				filenames.add(getString(R.string.update_params_filename));
@@ -113,6 +124,32 @@ public class MainActivity extends AppCompatActivity {
 
 				DownloadFile dl=new DownloadFile(MainActivity.this,urls,filenames,percents);
 				dl.execute();
+			}
+		});
+
+		// save update urls
+		btn_save_edittext=(Button)findViewById(R.id.button_main_update_url_save);
+		btn_save_edittext.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ParseSharePref psp=new ParseSharePref(getString(R.string.share_pref_features_urls),MainActivity.this);
+				psp.setString(getString(R.string.update_features_url),((EditText)findViewById(R.id.edittext_main_features_url)).getText().toString());
+				psp.setString(getString(R.string.update_params_url),((EditText)findViewById(R.id.edittext_main_params_url)).getText().toString());
+			}
+		});
+
+		// reset update urls
+		btn_reset_edittext=(Button)findViewById(R.id.button_main_update_url_reset);
+		btn_reset_edittext.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ParseSharePref psp=new ParseSharePref(getString(R.string.share_pref_features_urls),MainActivity.this);
+				String original_url1=getString(R.string.update_features_url);
+				String original_url2=getString(R.string.update_params_url);
+				psp.setString(getString(R.string.update_features_url),original_url1);
+				psp.setString(getString(R.string.update_params_url),original_url2);
+				edittext_features_url.setText(original_url1);
+				edittext_params_url.setText(original_url2);
 			}
 		});
 
