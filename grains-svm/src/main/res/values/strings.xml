@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Grains_SVM</string>
-    <string name="updata_url">https://lixingcong.com/s/grain_features.csv</string>
-    <string name="update_filename">grain_features.csv</string>
+    <string name="updata_features_url">https://lixingcong.com/s/grain_features.csv</string>
+    <string name="update_features_filename">grain_features.csv</string>
+    <string name="updata_params_url">https://lixingcong.com/s/grain_svm_params.csv</string>
+    <string name="update_params_filename">grain_svm_params.csv</string>
     <string name="share_pref_svm_param">share_pref_svm_param</string>
     <string name="share_pref_is_set_param">is_set_param</string>
     <string name="button_main_run_svm">Run SVM</string>

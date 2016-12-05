@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				String update_url=((EditText)findViewById(R.id.edittext_main_url)).getText().toString();
-				DownloadFile dl=new DownloadFile(MainActivity.this,getString(R.string.update_filename));
+				DownloadFile dl=new DownloadFile(MainActivity.this,getString(R.string.update_features_filename));
 				dl.execute(update_url);
 			}
 		});
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
 	private boolean check_if_csv_exist(){
 		String filepath = Environment.getExternalStorageDirectory().getPath();
-		String filename=filepath+"/"+getString(R.string.update_filename);
+		String filename=filepath+"/"+getString(R.string.update_features_filename);
 		File file = new File(filename);
 		if(!file.exists()){
 			Toast.makeText(getApplicationContext(),"Please update features",Toast.LENGTH_LONG).show();

@@ -189,7 +189,7 @@ public class RunSVMActivity extends AppCompatActivity {
 	}
 
 	private void loadTrainFeatures(){
-		features_train =new My_Features("",getString(R.string.update_filename));
+		features_train =new My_Features("",getString(R.string.update_features_filename));
 		features_train.load_saved_features();
 		train_y=features_train.get_features_y();
 		train_x=features_train.get_features_x();

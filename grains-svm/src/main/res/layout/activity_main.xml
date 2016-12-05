@@ -37,7 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/edittext_main_url"
-            android:text="@string/updata_url"/>
+            android:text="@string/updata_features_url"/>
 
         <Button
             android:layout_width="wrap_content"
