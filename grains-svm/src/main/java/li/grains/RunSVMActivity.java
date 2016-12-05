@@ -139,7 +139,7 @@ public class RunSVMActivity extends AppCompatActivity {
 				.setAspectRatio(1,1)
 				.setFixAspectRatio(true)
 				.setAllowCounterRotation(true)
-				.setAutoZoomEnabled(false)
+				.setAutoZoomEnabled(true)
 				.start(this);
 	}
 
