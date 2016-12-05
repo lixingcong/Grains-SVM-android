@@ -6,11 +6,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import java.util.List;
+
+import li.grains.ml.My_CSV;
 
 public class SVMParamsActivity extends AppCompatActivity {
 
 	private ListView mlistView;
+	private List<String> svm_params_array=null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +24,10 @@ public class SVMParamsActivity extends AppCompatActivity {
 		setTitle("SVM params list");
 
 		mlistView = (ListView) findViewById(R.id.listview_svmparams_params);
-		String[] svm_params_array=getResources().getStringArray(R.array.svm_params);
-		ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, svm_params_array);
+
+		read_params_from_file();
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, svm_params_array.toArray(new String[0]));
 		mlistView.setAdapter(adapter);
 		mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -46,5 +52,10 @@ public class SVMParamsActivity extends AppCompatActivity {
 				finish();
 			}
 		});
+	}
+
+	private void read_params_from_file(){
+		My_CSV my_csv=new My_CSV(getString(R.string.update_params_filename));
+		svm_params_array=my_csv.read();
 	}
 }

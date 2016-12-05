@@ -105,8 +105,7 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 			int fileLength = connection.getContentLength();
 
 			// Locate storage location
-			String filepath = Environment.getExternalStorageDirectory()
-					.getPath();
+			String filepath = Environment.getExternalStorageDirectory().getPath();
 
 			// Download the file
 			InputStream input = new BufferedInputStream(url.openStream());
