@@ -81,8 +81,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_main_change_svm_param"
-            android:text="@string/button_main_setsvm"/>
+            android:id="@+id/button_main_update_program"
+            android:text="@string/button_main_update_program"/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,7 +1,10 @@
 package li.grains;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Environment;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 	private void set_my_view(){
 		final Button btn_perform_download_features;
 		final Button btn_update_features;
-		final Button btn_change_svm_params;
+		final Button btn_update_program;
 		final Button btn_run_svm;
 		final Button btn_reset_edittext;
 		final Button btn_save_edittext;
@@ -140,6 +142,32 @@ public class MainActivity extends AppCompatActivity {
 				psp.setString(getString(R.string.update_params_url),original_url2);
 				edittext_features_url.setText(original_url1);
 				edittext_params_url.setText(original_url2);
+			}
+		});
+
+		// update program
+		btn_update_program=(Button)findViewById(R.id.button_main_update_program);
+		btn_update_program.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch (which){
+							case DialogInterface.BUTTON_POSITIVE:
+								Uri uri = Uri.parse(getString(R.string.update_program_url));
+								Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+								startActivity(intent);
+								break;
+							default:
+								break;
+						}
+					}
+				};
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setMessage("Update?").setPositiveButton("Yes", dialogClickListener)
+						.setNegativeButton("No", dialogClickListener).show();
 			}
 		});
 	}

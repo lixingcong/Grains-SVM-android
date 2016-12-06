@@ -4,12 +4,13 @@
     <string name="update_features_filename">grain_features.csv</string>
     <string name="update_params_url">https://lixingcong.com/s/grain_svm_params.csv</string>
     <string name="update_params_filename">grain_svm_params.csv</string>
+    <string name="update_program_url">https://lixingcong.com/s/grains-svm-debug.apk</string>
     <string name="share_pref_svm_param">share_pref_svm_param</string>
     <string name="share_pref_features_urls">share_pref_features_url</string>
     <string name="share_pref_is_set_param">is_set_param</string>
     <string name="button_main_run_svm">Run SVM</string>
     <string name="button_main_update">Update features</string>
-    <string name="button_main_setsvm">Set SVM params</string>
+    <string name="button_main_update_program">Update program</string>
     <string name="button_runsvm_setsvm">Set SVM</string>
     <string name="button_runsvm_trained_img">trained samples</string>
     <string name="button_runsvm_run">Run</string>
