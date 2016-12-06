@@ -61,6 +61,11 @@ public class RunSVMActivity extends AppCompatActivity {
 				set_add_img_visible(true);
 				is_cropped=false;
 			}
+		}else if(requestCode==1 && resultCode==RESULT_OK){
+			TextView text_params=(TextView)findViewById(R.id.textview_runsvm_text1);
+			String C=data.getExtras().getString("C");
+			String gamma=data.getExtras().getString("gamma");
+			text_params.setText("C="+C+", gamma="+gamma);
 		}
 	}
 
@@ -80,10 +85,13 @@ public class RunSVMActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent=new Intent(getApplicationContext(),SVMParamsActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent,1);
 				is_svm_has_been_intialized=false;
 			}
 		});
+
+		// update textview
+		set_view_of_params();
 
 		// get pic
 		imageview_pick_img.setOnClickListener(new View.OnClickListener() {
@@ -109,12 +117,16 @@ public class RunSVMActivity extends AppCompatActivity {
 		btn_run.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(is_svm_has_been_intialized==false)
+				if(is_svm_has_been_intialized==false){
 					initSVM();
+					return;
+				}
 
 				if(is_cropped && is_svm_has_been_intialized) {
 					PredictProgress predictProgress=new PredictProgress(RunSVMActivity.this,my_svm,features_train,getString(R.string.img_filename_cropped));
 					predictProgress.execute();
+				}else{
+					Toast.makeText(RunSVMActivity.this,"Run Error: No input image!",Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -209,5 +221,15 @@ public class RunSVMActivity extends AppCompatActivity {
 	public void finish() {
 		super.finish();
 		overridePendingTransition(R.anim.slide_back_in, R.anim.slide_back_out);
+	}
+
+	private void set_view_of_params(){
+		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
+		TextView text_params=(TextView)findViewById(R.id.textview_runsvm_text1);
+		if(parseSharePref.contains(getString(R.string.share_pref_is_set_param))){
+			String C=parseSharePref.getString("C");
+			String gamma=parseSharePref.getString("gamma");
+			text_params.setText("C="+C+", gamma="+gamma);
+		}
 	}
 }
