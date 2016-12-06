@@ -32,6 +32,7 @@ public class RunSVMActivity extends AppCompatActivity {
 	private boolean is_svm_has_been_intialized;
 	private boolean is_got_train_features;
 	private boolean is_cropped;
+	private boolean is_params_set;
 	private List<Double> train_y=null;
 	private List<List<Double>> train_x=null;
 	private TextView textview1=null;
@@ -41,6 +42,7 @@ public class RunSVMActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_run_svm);
 		set_my_view();
+		is_params_set=check_if_params_set();
 		is_svm_has_been_intialized=false;
 		is_got_train_features=false;
 		is_cropped=false;
@@ -66,6 +68,7 @@ public class RunSVMActivity extends AppCompatActivity {
 			String C=data.getExtras().getString("C");
 			String gamma=data.getExtras().getString("gamma");
 			text_params.setText("C="+C+", gamma="+gamma);
+			is_params_set=true;
 		}
 	}
 
@@ -117,6 +120,11 @@ public class RunSVMActivity extends AppCompatActivity {
 		btn_run.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(is_params_set==false){
+					Toast.makeText(RunSVMActivity.this,"Run Error: C and gamma is undefined",Toast.LENGTH_SHORT).show();
+					return;
+				}
+
 				if(is_svm_has_been_intialized==false){
 					initSVM();
 					return;
@@ -126,7 +134,7 @@ public class RunSVMActivity extends AppCompatActivity {
 					PredictProgress predictProgress=new PredictProgress(RunSVMActivity.this,my_svm,features_train,getString(R.string.img_filename_cropped));
 					predictProgress.execute();
 				}else{
-					Toast.makeText(RunSVMActivity.this,"Run Error: No input image!",Toast.LENGTH_SHORT).show();
+					Toast.makeText(RunSVMActivity.this,"Run Error: No input image",Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -231,5 +239,14 @@ public class RunSVMActivity extends AppCompatActivity {
 			String gamma=parseSharePref.getString("gamma");
 			text_params.setText("C="+C+", gamma="+gamma);
 		}
+	}
+
+	private boolean check_if_params_set(){
+		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
+		TextView text_params=(TextView)findViewById(R.id.textview_runsvm_text1);
+		if(parseSharePref.contains(getString(R.string.share_pref_is_set_param)))
+			return true;
+		else
+			return false;
 	}
 }
