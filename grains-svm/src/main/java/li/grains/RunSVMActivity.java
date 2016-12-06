@@ -37,7 +37,6 @@ public class RunSVMActivity extends AppCompatActivity {
 	private List<List<Double>> train_x=null;
 	private TextView textview1=null;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,7 +73,7 @@ public class RunSVMActivity extends AppCompatActivity {
 		final Button btn_get_pic=(Button)findViewById(R.id.button_runsvm_getpic);
 		final Button btn_trained_pic=(Button)findViewById(R.id.button_runsvm_trainedpic);
 		final Button btn_run=(Button)findViewById(R.id.button_runsvm_run);
-		final ImageView imageview_add_logo=(ImageView)findViewById(R.id.imageview_runsvm_addlogo);
+		final ImageView imageview_pick_img=(ImageView)findViewById(R.id.imageview_runsvm_inputimg);
 
 		textview1=(TextView)findViewById(R.id.textview_runsvm_text1);
 
@@ -82,13 +81,7 @@ public class RunSVMActivity extends AppCompatActivity {
 		setTitle("Run SVM");
 
 		// get pic
-		btn_get_pic.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startCropImageActivity(null);
-			}
-		});
-		imageview_add_logo.setOnClickListener(new View.OnClickListener() {
+		imageview_pick_img.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				startCropImageActivity(null);
