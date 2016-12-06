@@ -25,19 +25,19 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 	private ProgressDialog mProgressDialog;
 	private Context context;
 	private boolean running;
-	private List<String> urls,filenames;
+	private List<String> urls, filenames;
 	private List<Integer> percents;
 	private int total_percent;
-	StoragePath storagePath=null;
+	StoragePath storagePath = null;
 
-	public DownloadFile(Context context,List<String> urls,List<String> filenames,List<Integer> percents){
+	public DownloadFile(Context context, List<String> urls, List<String> filenames, List<Integer> percents) {
 		super();
-		this.context=context;
-		this.urls=urls;
-		this.filenames=filenames;
-		this.percents=percents;
-		this.total_percent=0;
-		this.storagePath=new StoragePath();
+		this.context = context;
+		this.urls = urls;
+		this.filenames = filenames;
+		this.percents = percents;
+		this.total_percent = 0;
+		this.storagePath = new StoragePath();
 	}
 
 	@Override
@@ -56,24 +56,24 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 		mProgressDialog.show();
 
 		// download could be cancelled
-		running=true;
+		running = true;
 		mProgressDialog.setCancelable(true);
 		mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialog) {
 				cancel(true);
-				running=false;
+				running = false;
 			}
 		});
 	}
 
 	@Override
 	protected String doInBackground(Void... params) {
-		if(running){
-			for(int i=0;i<urls.size();i++)
+		if (running) {
+			for (int i = 0; i < urls.size(); i++)
 				download_a_file(i);
 		}
-		running=false;
+		running = false;
 		return null;
 	}
 
@@ -82,10 +82,10 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 		super.onProgressUpdate(values);
 		// Update the progress dialog
 		mProgressDialog.setProgress(values[0]);
-		mProgressDialog.setTitle("Save to: "+filenames.get(values[1]));
+		mProgressDialog.setTitle("Save to: " + filenames.get(values[1]));
 		// Dismiss the progress dialog
 		// mProgressDialog.dismiss();
-		if(values[0]==100){
+		if (values[0] == 100) {
 			Toast.makeText(context, "Update Done", Toast.LENGTH_SHORT).show();
 			mProgressDialog.dismiss();
 		}
@@ -97,7 +97,7 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 		Toast.makeText(context, "Update was cancelled", Toast.LENGTH_SHORT).show();
 	}
 
-	private void download_a_file(int misson_index){
+	private void download_a_file(int misson_index) {
 		try {
 			URL url = new URL(urls.get(misson_index));
 			URLConnection connection = url.openConnection();
@@ -110,7 +110,7 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 			InputStream input = new BufferedInputStream(url.openStream());
 
 			// Save the downloaded file
-			OutputStream output = new FileOutputStream(storagePath.getPath()+filenames.get(misson_index));
+			OutputStream output = new FileOutputStream(storagePath.getPath() + filenames.get(misson_index));
 
 			byte data[] = new byte[1024];
 			long total = 0;
@@ -118,11 +118,11 @@ public class DownloadFile extends AsyncTask<Void, Integer, String> {
 			while ((count = input.read(data)) != -1) {
 				total += count;
 				// Publish the progress
-				publishProgress(((int) (total * percents.get(misson_index) / fileLength)+total_percent),misson_index);
+				publishProgress(((int) (total * percents.get(misson_index) / fileLength) + total_percent), misson_index);
 				output.write(data, 0, count);
 			}
 
-			total_percent+=percents.get(misson_index);
+			total_percent += percents.get(misson_index);
 
 			// Close connection
 			output.flush();

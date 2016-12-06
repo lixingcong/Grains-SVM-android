@@ -18,24 +18,24 @@ import li.grains.ml.My_SVM;
 public class PredictProgress extends AsyncTask<Void, Void, Void> {
 
 	private Context context;
-	private My_SVM my_svm=null;
-	private My_Features my_features=null;
-	private String filename=null;
-	private ProgressDialog progress=null;
+	private My_SVM my_svm = null;
+	private My_Features my_features = null;
+	private String filename = null;
+	private ProgressDialog progress = null;
 	private boolean is_finish;
-	private String result=null;
+	private String result = null;
 
-	public PredictProgress(Context context,My_SVM my_svm, My_Features my_features, String filename){
-		this.my_svm=my_svm;
-		this.filename=filename;
-		this.context=context;
-		this.my_features=my_features;
+	public PredictProgress(Context context, My_SVM my_svm, My_Features my_features, String filename) {
+		this.my_svm = my_svm;
+		this.filename = filename;
+		this.context = context;
+		this.my_features = my_features;
 	}
 
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		progress=new ProgressDialog(context);
+		progress = new ProgressDialog(context);
 		// please wait
 		progress.setTitle("Calculating features...");
 		progress.setMessage("Please wait for a while");
@@ -48,16 +48,16 @@ public class PredictProgress extends AsyncTask<Void, Void, Void> {
 				progress.dismiss();
 			}
 		});
-		is_finish=false;
+		is_finish = false;
 		progress.show();
 		progress.getButton(ProgressDialog.BUTTON_POSITIVE).setEnabled(false);
 	}
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		if(!is_finish) {
-			StoragePath storagePath=new StoragePath();
-			My_Features features_test = new My_Features(storagePath.getPath()+filename);
+		if (!is_finish) {
+			StoragePath storagePath = new StoragePath();
+			My_Features features_test = new My_Features(storagePath.getPath() + filename);
 			List<List<Double>> test_x = features_test.get_features_x();
 			List<Double> predict_y = my_svm.predict(test_x);
 			result = my_features.get_chinese_from_category(new Double(predict_y.get(0)).intValue());
@@ -71,9 +71,9 @@ public class PredictProgress extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected void onProgressUpdate(Void... values) {
 		super.onProgressUpdate(values);
-		if(is_finish){
+		if (is_finish) {
 			progress.getButton(ProgressDialog.BUTTON_POSITIVE).setEnabled(true);
-			progress.setTitle("Result: "+result);
+			progress.setTitle("Result: " + result);
 			progress.setMessage("Done");
 		}
 	}

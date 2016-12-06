@@ -14,7 +14,7 @@ import li.grains.ml.My_CSV;
 public class SVMParamsActivity extends AppCompatActivity {
 
 	private ListView mlistView;
-	private List<String> svm_params_array=null;
+	private List<String> svm_params_array = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,30 +32,30 @@ public class SVMParamsActivity extends AppCompatActivity {
 		mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				String item=mlistView.getItemAtPosition(position).toString();
+				String item = mlistView.getItemAtPosition(position).toString();
 
 				// save to share-prefref
-				String[] item_splited=item.split(",");
-				ParseSharePref ps=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
-				ps.setString("C",item_splited[0]);
-				ps.setString("gamma",item_splited[1]);
+				String[] item_splited = item.split(",");
+				ParseSharePref ps = new ParseSharePref(getString(R.string.share_pref_svm_param), getApplicationContext());
+				ps.setString("C", item_splited[0]);
+				ps.setString("gamma", item_splited[1]);
 
 				// mark as set
-				if(ps.contains(getString(R.string.share_pref_is_set_param))==false){
-					ps.setString(getString(R.string.share_pref_is_set_param),"true");
+				if (ps.contains(getString(R.string.share_pref_is_set_param)) == false) {
+					ps.setString(getString(R.string.share_pref_is_set_param), "true");
 				}
 
 				// return Activity result
-				getIntent().putExtra("C",item_splited[0]);
-				getIntent().putExtra("gamma",item_splited[1]);
+				getIntent().putExtra("C", item_splited[0]);
+				getIntent().putExtra("gamma", item_splited[1]);
 				setResult(RESULT_OK, getIntent());
 				finish();
 			}
 		});
 	}
 
-	private void read_params_from_file(){
-		My_CSV my_csv=new My_CSV(getString(R.string.update_params_filename));
-		svm_params_array=my_csv.read();
+	private void read_params_from_file() {
+		My_CSV my_csv = new My_CSV(getString(R.string.update_params_filename));
+		svm_params_array = my_csv.read();
 	}
 }
