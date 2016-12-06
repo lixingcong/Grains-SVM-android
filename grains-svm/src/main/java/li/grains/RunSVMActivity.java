@@ -69,6 +69,7 @@ public class RunSVMActivity extends AppCompatActivity {
 			String gamma = data.getExtras().getString("gamma");
 			text_params.setText("C=" + C + ", gamma=" + gamma);
 			is_params_set = true;
+			initSVM();
 		}
 	}
 
@@ -108,11 +109,16 @@ public class RunSVMActivity extends AppCompatActivity {
 		btn_trained_pic.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String all_trained_sample = features_train.get_all_chinese();
-				final AlertDialog.Builder alertDialog = new AlertDialog.Builder(RunSVMActivity.this, android.R.style.Theme_Material_Light_Dialog_Alert);
-				alertDialog.setTitle("All trained samples");
-				alertDialog.setMessage(all_trained_sample);
-				alertDialog.show();
+				if(is_svm_has_been_intialized){
+					String all_trained_sample = features_train.get_all_chinese();
+					final AlertDialog.Builder alertDialog = new AlertDialog.Builder(RunSVMActivity.this, android.R.style.Theme_Material_Light_Dialog_Alert);
+					alertDialog.setTitle("All trained samples");
+					alertDialog.setMessage(all_trained_sample);
+					alertDialog.show();
+				}else{
+					Toast.makeText(RunSVMActivity.this,"Please set svm",Toast.LENGTH_SHORT).show();
+				}
+
 			}
 		});
 
