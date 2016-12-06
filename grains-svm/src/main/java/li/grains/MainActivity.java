@@ -3,6 +3,7 @@ package li.grains;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 		final LinearLayout layout_update_features;
 		final EditText edittext_features_url=((EditText)findViewById(R.id.edittext_main_features_url));
 		final EditText edittext_params_url=((EditText)findViewById(R.id.edittext_main_params_url));
+		final TextView textview1=(TextView)findViewById(R.id.textview_main_text1);
 
 		// run svm: pick up a photo
 		btn_run_svm=(Button)findViewById(R.id.button_main_run_svm);
@@ -170,6 +173,17 @@ public class MainActivity extends AppCompatActivity {
 						.setNegativeButton("No", dialogClickListener).show();
 			}
 		});
+
+		// version code
+		try{
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			int version_code = pInfo.versionCode;
+			textview1.setText("Build: "+Integer.toString(version_code));
+		}catch (Exception e) {
+			Log.e("Error", e.getMessage());
+			e.printStackTrace();
+		}
+
 	}
 
 	private boolean check_if_csv_exist(){
