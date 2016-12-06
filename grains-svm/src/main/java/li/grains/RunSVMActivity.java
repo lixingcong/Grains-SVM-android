@@ -3,7 +3,6 @@ package li.grains;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,10 +44,6 @@ public class RunSVMActivity extends AppCompatActivity {
 		is_svm_has_been_intialized=false;
 		is_got_train_features=false;
 		is_cropped=false;
-
-		// check if C and gamma was set
-		if(check_if_SVM_params_set()==true)
-			initSVM();
 	}
 
 	@Override
@@ -70,7 +65,7 @@ public class RunSVMActivity extends AppCompatActivity {
 	}
 
 	private void set_my_view(){
-		final Button btn_get_pic=(Button)findViewById(R.id.button_runsvm_getpic);
+		final Button btn_set_svm=(Button)findViewById(R.id.button_runsvm_setsvm);
 		final Button btn_trained_pic=(Button)findViewById(R.id.button_runsvm_trainedpic);
 		final Button btn_run=(Button)findViewById(R.id.button_runsvm_run);
 		final ImageView imageview_pick_img=(ImageView)findViewById(R.id.imageview_runsvm_inputimg);
@@ -79,6 +74,16 @@ public class RunSVMActivity extends AppCompatActivity {
 
 		// set title
 		setTitle("Run SVM");
+
+		// set params
+		btn_set_svm.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(getApplicationContext(),SVMParamsActivity.class);
+				startActivity(intent);
+				is_svm_has_been_intialized=false;
+			}
+		});
 
 		// get pic
 		imageview_pick_img.setOnClickListener(new View.OnClickListener() {
@@ -168,17 +173,6 @@ public class RunSVMActivity extends AppCompatActivity {
 			}
 		};
 		mThread.start();
-	}
-
-	private boolean check_if_SVM_params_set(){
-		ParseSharePref parseSharePref=new ParseSharePref(getString(R.string.share_pref_svm_param),getApplicationContext());
-		if(parseSharePref.contains(getString(R.string.share_pref_is_set_param))==false){
-			Intent intent=new Intent(getApplicationContext(),SVMParamsActivity.class);
-			startActivity(intent);
-			Toast.makeText(getApplicationContext(),"Please set params first",Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		return true;
 	}
 
 	private void loadTrainFeatures(){

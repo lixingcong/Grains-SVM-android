@@ -10,7 +10,7 @@
     <string name="button_main_run_svm">Run SVM</string>
     <string name="button_main_update">Update features</string>
     <string name="button_main_setsvm">Set SVM params</string>
-    <string name="button_runsvm_getpic">get pic</string>
+    <string name="button_runsvm_setsvm">Set SVM</string>
     <string name="button_runsvm_trained_img">trained samples</string>
     <string name="button_runsvm_run">Run</string>
     <string name="textview_default_text">default text</string>
